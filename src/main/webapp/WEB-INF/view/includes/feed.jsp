@@ -9,14 +9,14 @@
   </div>
   <div class="content">
     <div class="header">${feed.feedName}</div>
-    <div class="meta">
-      ${feed.description}
-    </div>
     <div class="description">
+      ${feed.description ? feed.description : feed.url}
+    </div>
+    <div class="subtitle is-6 has-text-primary">
       ${feed.title}
     </div>
   </div>
-  <div class="extra content">
+  <div class="extra content has-text-centered">
     <span class="">
       Last Updated:
       <span class="is-primary"><m:prettydate date="${feed.lastUpdated}" /></span> 

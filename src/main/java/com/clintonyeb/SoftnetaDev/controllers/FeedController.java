@@ -3,6 +3,7 @@ package com.clintonyeb.SoftnetaDev.controllers;
 import com.clintonyeb.SoftnetaDev.models.Feed;
 import com.clintonyeb.SoftnetaDev.models.Message;
 import com.clintonyeb.SoftnetaDev.services.FeedService;
+import com.clintonyeb.SoftnetaDev.services.MessageService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import java.util.Set;
 public class FeedController {
     @Autowired
     private FeedService feedService;
+    @Autowired
+    private MessageService messageService;
 
     Gson gson = new Gson();
 
@@ -68,7 +71,7 @@ public class FeedController {
 
         model.addAttribute("feed", feed);
         model.addAttribute("messages", messages);
-        model.addAttribute("article_count", feedService.feed_size());
+        model.addAttribute("article_count", messageService.message_size(feed.getId()));
 
         return "messages";
     }
