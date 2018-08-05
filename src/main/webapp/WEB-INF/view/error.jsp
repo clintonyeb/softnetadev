@@ -11,18 +11,11 @@
     <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> -->
 </head>
 <body>
-  <jsp:include page="includes/header.jsp"></jsp:include>
-
-  <section class="section">
+<section class="section">
     <div class="container">
-      <div class="ui link cards">
-        <c:forEach var="feed" items="${items.content}">
-            <c:set var="feed" value="${feed}" scope="request"/>
-            <jsp:include page="includes/feed.jsp"></jsp:include>
-        </c:forEach>
-      </div>
+        Error Page
     </div>
-  </section>
-  <script src="js/script.js"></script>
+ </section>
+ <script src="js/script.js"></script>
 </body>
 </html>

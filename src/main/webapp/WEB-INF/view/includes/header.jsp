@@ -5,7 +5,7 @@
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item">
-            <img src="images/logo.png" alt="Logo">
+            <img src="images/logo.png" alt="Logo" id="brand">
           </a>
           <span class="navbar-burger burger" data-target="navbarMenuHeroA">
             <span></span>
@@ -15,21 +15,12 @@
         </div>
         <div id="navbarMenuHeroA" class="navbar-menu">
           <div class="navbar-end">
-            <a class="navbar-item is-active">
+            <a class="navbar-item" href="/feeds">
               Home
-            </a>
-            <a class="navbar-item">
-              Examples
-            </a>
-            <a class="navbar-item">
-              Documentation
             </a>
             <span class="navbar-item">
               <a class="button is-primary is-inverted">
-                <span class="icon">
-                  <i class="fas fa-home"></i>
-                </span>
-                <span>Download</span>
+                <span>Login</span>
               </a>
             </span>
           </div>
@@ -47,6 +38,7 @@
       <h2 class="subtitle">
         Staying Updated with the World
       </h2>
+      <a class="button is-medium is-primary is-inverted" id="add-feed-btn">Add New Feed</a>
     </div>
   </div>
 
@@ -65,4 +57,42 @@
       </div>
     </nav>
   </div> -->
+
+  <!-- Modal for adding new Feed -->
+  <div class="modal" id="feed-modal">
+    <div class="modal-background" id="feed-modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Add New RSS Feed</p>
+        <button class="delete" aria-label="close" id="feed-modal-close"></button>
+      </header>
+      <section class="modal-card-body">
+
+        <div class="notification is-danger is-hidden" id="notification">
+          <button class="delete"></button>
+          <span id="message-content"></span>
+        </div>
+
+        <div class="field">
+          <label class="label">URL:</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="URL to RSS Feed" id="feed-url" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Name:</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Name of RSS Feed" id="feed-name" required>
+          </div>
+        </div>
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-primary" id="feed-modal-save">Save changes</button>
+        <button class="button" id="feed-modal-cancel">Cancel</button>
+      </footer>
+    </div>
+  </div>
+
 </section>

@@ -1,37 +1,28 @@
-<div class="box">
-  <article class="media">
-    <div class="media-left">
-      <figure class="image is-64x64">
-        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-      </figure>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="m" uri="/WEB-INF/custom.tld"%>
+
+
+<a class="ui raised card" href="/messages?feed_id=${feed.id}">
+  <div class="image">
+    <img src="${feed.imageUrl}">
+  </div>
+  <div class="content">
+    <div class="header">${feed.feedName}</div>
+    <div class="meta">
+      ${feed.description}
     </div>
-    <div class="media-content">
-      <div class="content">
-        <p>
-          <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-          <br>
-          ${feed.id}
-        </p>
-      </div>
-      <nav class="level is-mobile">
-        <div class="level-left">
-          <a class="level-item" aria-label="reply">
-            <span class="icon is-small">
-              <i class="fas fa-reply" aria-hidden="true"></i>
-            </span>
-          </a>
-          <a class="level-item" aria-label="retweet">
-            <span class="icon is-small">
-              <i class="fas fa-retweet" aria-hidden="true"></i>
-            </span>
-          </a>
-          <a class="level-item" aria-label="like">
-            <span class="icon is-small">
-              <i class="fas fa-heart" aria-hidden="true"></i>
-            </span>
-          </a>
-        </div>
-      </nav>
+    <div class="description">
+      ${feed.title}
     </div>
-  </article>
-</div>
+  </div>
+  <div class="extra content">
+    <span class="">
+      Last Updated:
+      <span class="is-primary"><m:prettydate date="${feed.lastUpdated}" /></span> 
+    </span>
+  </div>
+  <!--<div class="ui bottom attached button is-danger">
+    Remove
+  </div>-->
+</a>
