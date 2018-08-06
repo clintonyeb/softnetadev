@@ -1,7 +1,8 @@
 package com.clintonyeb.SoftnetaDev.controllers;
 
 import com.clintonyeb.SoftnetaDev.models.Feed;
-import com.clintonyeb.SoftnetaDev.services.FeedService;
+import com.clintonyeb.SoftnetaDev.services.IFeedService;
+import com.clintonyeb.SoftnetaDev.services.IMessageService;
 import com.clintonyeb.SoftnetaDev.services.MessageService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +16,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class FeedController {
     @Autowired
-    private FeedService feedService;
+    private IFeedService feedService;
     @Autowired
-    private MessageService messageService;
+    private IMessageService messageService;
 
     @GetMapping("/")
-    public String home(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+    public String home() {
         return "redirect:/feeds";
     }
 
     @GetMapping("/feeds")
-    public String get_feeds(@RequestParam(name="size", required=false, defaultValue="20") String size,
-                                             @RequestParam(name="page", required=false, defaultValue="0") String page,
-                                             Model model) {
-        int sizeInt = Integer.parseInt(size);
-        int pageInt = Integer.parseInt(page);
-
-        Iterable<Feed> feeds = feedService.getAllFeeds(sizeInt, pageInt);
-        model.addAttribute("items", feeds);
-
+    public String get_feeds(@RequestParam(name = "size", required = false, defaultValue = "20") int size,
+                            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                            Model model) {
+        model.addAttribute("items", feedService.getAllFeeds(size, page));
         return "feeds";
     }
 
@@ -41,11 +37,14 @@ public class FeedController {
     public @ResponseBody String post_feed(@RequestParam(name="url") String url,
                  @RequestParam(name="feed_name") String feedName,
                  Model model) {
+
         Feed feed = feedService.addFeed(url, feedName);
+
         if(feed != null) {
             Gson gson = new Gson();
             return gson.toJson(feed);
         }
+
         return "Error saving feed";
     }
 
@@ -57,7 +56,7 @@ public class FeedController {
             return "redirect:/feeds";
         }
 
-        // TODO: set a message before returning error
+        model.addAttribute("message", "There was an error deleting feed.");
         return "error";
     }
 }

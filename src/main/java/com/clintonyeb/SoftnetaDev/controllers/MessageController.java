@@ -2,7 +2,8 @@ package com.clintonyeb.SoftnetaDev.controllers;
 
 import com.clintonyeb.SoftnetaDev.models.Feed;
 import com.clintonyeb.SoftnetaDev.models.Message;
-import com.clintonyeb.SoftnetaDev.services.FeedService;
+import com.clintonyeb.SoftnetaDev.services.IFeedService;
+import com.clintonyeb.SoftnetaDev.services.IMessageService;
 import com.clintonyeb.SoftnetaDev.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class MessageController {
     @Autowired
-    private MessageService messageService;
+    private IMessageService messageService;
     @Autowired
-    private FeedService feedService;
+    private IFeedService feedService;
 
     @GetMapping("/messages")
     public String get_feed_messages(@RequestParam(name = "size", required = false, defaultValue = "10") String size,
@@ -24,7 +27,7 @@ public class MessageController {
         Long feedId = Long.parseLong(feed_id);
         Feed feed = feedService.getFeed(feedId);
 
-        Iterable<Message> messages = feedService.getFeedMessages(feedId, Integer.parseInt(size));
+        List<Message> messages = messageService.getAllMessagesByFeedId(feedId);
 
         model.addAttribute("feed", feed);
         model.addAttribute("messages", messages);
