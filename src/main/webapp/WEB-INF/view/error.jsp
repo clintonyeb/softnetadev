@@ -3,19 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" %>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
-    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> -->
-</head>
-<body>
+<jsp:include page="includes/header.jsp"></jsp:include>
 <section class="section">
-    <div class="container">
-        Error Page
+    <div class="container has-text-centered">
+        <h1 class="title is-2">An error has occured</h1>
+        <h2 class="subtitle">Error: ${message ? message : "Unknown Error"}</h2> 
     </div>
- </section>
- <script src="js/script.js"></script>
+</section>
 </body>
 </html>

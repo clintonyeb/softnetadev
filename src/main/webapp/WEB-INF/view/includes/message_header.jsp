@@ -4,7 +4,7 @@
     <nav class="navbar">
       <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item">
+          <a class="navbar-item" href="/feeds">
             <img src="images/logo.png" alt="Logo" id="brand">
           </a>
           <span class="navbar-burger burger" data-target="navbarMenuHeroA">
