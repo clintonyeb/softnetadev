@@ -14,11 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.Reader;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,27 +24,11 @@ import java.util.List;
 public class MessageService {
 
     private static final Logger log = LoggerFactory.getLogger(MessageService.class);
-    private final int SCHEDULER_INTERVAL = 1000 * 60 * 5; // 5 minutes
 
     @Autowired
     private MessageRepository messageRepository;
 
-    @Autowired
-    private FeedService feedService;
-
-    @Scheduled(fixedDelay = SCHEDULER_INTERVAL)
-    public void fetchMessages() {
-        log.info("Fetching new messages");
-
-        Iterable<Feed> feeds = feedService.getAllFeeds(10000, 0);
-
-        for (Feed fd : feeds) {
-            List entries = getFeedMessages(fd);
-            addMessages(fd, entries);
-        }
-    }
-
-    private List getFeedMessages(Feed feed) {
+    public List getFeedMessages(Feed feed) {
         log.info("Fetching messages for " + feed.getId());
         Reader rd = UtilityService.makeHTTPRequest(feed.getUrl());
 
@@ -72,11 +54,12 @@ public class MessageService {
             // some feed items have their images in their descriptions.
             // Parse the image out before applying any formatting.
 
-            String thumbnail = getThumbnaiFromDescription(description);
+            String thumbnail = getThumbnailFromDescription(description);
 
-            if(thumbnail == null || thumbnail.length() < 5) {
+            if (thumbnail == null || thumbnail.length() < 1) {
                 thumbnail = feed.getImageUrl();
             }
+
             // clean up description
             description = cleanUpDescription(description);
 
@@ -106,17 +89,21 @@ public class MessageService {
     }
 
     public Iterable<Message> getAllMessagesByFeedId(long feedId) {
-        Sort sort = new Sort(Sort.Direction.DESC, "published");
+        Sort sort = new Sort(Sort.Direction.DESC, Constants.MESSAGE_SORT_PROPERTY);
         return messageRepository.findFirst10ByFeedId(feedId, sort);
     }
 
-    private String getThumbnaiFromDescription(String description) {
+    public long countMessagesForFeedId(long feedId) {
+        return messageRepository.countByFeedId(feedId);
+    }
+
+    private String getThumbnailFromDescription(String description) {
         Document doc = Jsoup.parse(description);
         Elements imgs = doc.getElementsByTag("img");
         return imgs.attr("src");
     }
 
-    private  static String cleanUpDescription(String description){
+    private String cleanUpDescription(String description) {
         // remove all tags
         description = description.replaceAll("\\<.*?\\>", "");
 
@@ -127,9 +114,5 @@ public class MessageService {
         description = description.trim();
 
         return description;
-    }
-
-    public long message_size(long feedId){
-        return messageRepository.countByFeedId(feedId);
     }
 }

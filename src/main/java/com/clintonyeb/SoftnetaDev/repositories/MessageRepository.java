@@ -7,11 +7,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface MessageRepository extends PagingAndSortingRepository<Message, Long> {
-    public Iterable<Message> findAllByFeedId(@Param("feedId") long feedId);
-    public Iterable<Message> findFirst10ByFeedId(@Param("feedId") long feedId, Sort sort);
+    String countByFeedId = "SELECT COUNT(id) FROM Message m WHERE m.feed.id = ?1";
+
+    Iterable<Message> findAllByFeedId(@Param("feedId") long feedId);
+
+    Iterable<Message> findFirst10ByFeedId(@Param("feedId") long feedId, Sort sort);
 
     @Query(countByFeedId)
     Integer countByFeedId(Long feed_id);
-
-    final String countByFeedId = "SELECT COUNT(id) FROM Message m WHERE m.feed.id = ?1";
 }

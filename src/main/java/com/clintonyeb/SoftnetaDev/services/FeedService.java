@@ -7,20 +7,12 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndImage;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 import java.util.Optional;
@@ -30,18 +22,22 @@ import java.util.concurrent.Executors;
 @Service
 public class FeedService {
 
-    private final String DEFAULT_IMAGE = "/images/logo.png";
+    private ExecutorService executorService =
+            Executors.newFixedThreadPool(Constants.FEED_SERVICE_THREAD_POOL_SIZE);
 
-    ExecutorService executorService = Executors.newFixedThreadPool(10);
     @Autowired
     private FeedRepository feedRepository;
     @Autowired
     private MessageService messageService;
 
     public Iterable<Feed> getAllFeeds(int size, int page) {
-        Sort sort = new Sort(Sort.Direction.ASC, "lastUpdated");
+        Sort sort = new Sort(Sort.Direction.ASC, Constants.FEED_SORT_PROPERTY);
         Pageable pageable = PageRequest.of(page, size, sort);
         return feedRepository.findAll(pageable);
+    }
+
+    public Iterable<Feed> getAllFeeds() {
+        return feedRepository.findAll();
     }
 
     public Feed getFeed(long feedId) {
@@ -72,11 +68,10 @@ public class FeedService {
             return feed;
         } catch (Exception e){
             // duplicate entries are going to throw an exception
-            // what to do?
-            // pass
+            // TODO: let the user know the feed already exists
         }
 
-        // return old feed
+        // return old feed, for now
         return f;
     }
 
@@ -106,16 +101,16 @@ public class FeedService {
                 feed.setLastUpdated(syndFeed.getPublishedDate());
                 feed.setDescription(syndFeed.getDescription());
 
-                String imgUrl = null;
+                String imgUrl;
                 SyndImage image = syndFeed.getImage();
 
                 if(image != null) {
                      imgUrl = image.getUrl();
-                     if(imgUrl.length() < 5) {
-                         imgUrl = DEFAULT_IMAGE;
+                    if (imgUrl.length() < 1) {
+                        imgUrl = Constants.DEFAULT_IMAGE;
                      }
                 } else {
-                    imgUrl = DEFAULT_IMAGE;
+                    imgUrl = Constants.DEFAULT_IMAGE;
                 }
 
                 feed.setImageUrl(imgUrl);

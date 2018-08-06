@@ -1,5 +1,7 @@
 package com.clintonyeb.SoftnetaDev.models;
 
+import com.clintonyeb.SoftnetaDev.services.Constants;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -26,7 +28,7 @@ public class Message {
 
     private String thumbnail;
 
-    @Column(length = 5000)
+    @Column(length = Constants.DESCRIPTION_FIELD_SIZE)
     private String description;
 
     private Date published;
