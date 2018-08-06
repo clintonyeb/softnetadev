@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MessageRepository extends PagingAndSortingRepository<Message, Long> {
+public interface IMessageRepository extends PagingAndSortingRepository<Message, Long> {
     String countByFeedId = "SELECT COUNT(id) FROM Message m WHERE m.feed.id = ?1";
     Sort MESSAGE_SORT = new Sort(Sort.Direction.DESC, Constants.MESSAGE_SORT_PROPERTY);
 

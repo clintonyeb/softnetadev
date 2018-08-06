@@ -1,8 +1,10 @@
 package com.clintonyeb.SoftnetaDev.services;
 
+import com.clintonyeb.SoftnetaDev.helpers.Utility;
 import com.clintonyeb.SoftnetaDev.models.Feed;
 import com.clintonyeb.SoftnetaDev.models.Message;
-import com.clintonyeb.SoftnetaDev.repositories.MessageRepository;
+import com.clintonyeb.SoftnetaDev.repositories.IMessageRepository;
+import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
@@ -13,7 +15,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.Reader;
@@ -21,22 +22,25 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class MessageService {
+public class MessageService implements IMessageService {
 
     private static final Logger log = LoggerFactory.getLogger(MessageService.class);
 
     @Autowired
-    private MessageRepository messageRepository;
+    private IMessageRepository IMessageRepository;
+    @Autowired
+    private IFeedService IFeedService;
 
-    public List getFeedMessages(Feed feed) {
+    @Override
+    public List<SyndEntry> getFeedMessages(Feed feed) {
         log.info("Fetching messages for " + feed.getId());
-        Reader rd = UtilityService.makeHTTPRequest(feed.getUrl());
+
+        Reader rd = Utility.makeHTTPRequest(feed.getUrl());
 
         if (rd != null) {
             try {
                 SyndFeed syndFeed = new SyndFeedInput().build(rd);
-
-                return syndFeed.getEntries();
+                return (List<SyndEntry>) syndFeed.getEntries();
 
             } catch (FeedException e) {
                 e.printStackTrace();
@@ -46,11 +50,13 @@ public class MessageService {
         return null;
     }
 
-    public void addMessages(Feed feed, List entries) {
-        for (SyndEntry entry : (List<SyndEntry>) entries) {
+    @Override
+    public void addMessages(Feed feed, List<SyndEntry> entries) {
+        for (SyndEntry entry : entries) {
             Message message = new Message();
 
-            String description = entry.getDescription().getValue();
+            SyndContent des = entry.getDescription();
+            String description = des != null ? des.getValue() : (entry.getAuthor());
 
             // some feed items have their images in their descriptions.
             // Parse the image out before applying any formatting.
@@ -67,26 +73,31 @@ public class MessageService {
             message.setTitle(entry.getTitle());
             message.setPublished(entry.getPublishedDate());
             message.setLink(entry.getLink());
+            message.setFeed(feed);
 
             try {
-                messageRepository.save(message);
+                IMessageRepository.save(message);
                 log.info("Saved new message for feed: " + feed.getId());
+
+                // feed has an updated message
+                // so updated its last updated date
+                IFeedService.updateFeedLastUpdated(feed, new Date());
             } catch (Exception e) {
                 // duplicate entries will throw an exception
                 // ignore them
                 log.info("Ignoring duplicate messages");
             }
-
         }
     }
 
-    public Iterable<Message> getAllMessagesByFeedId(long feedId) {
-        Sort sort = new Sort(Sort.Direction.DESC, Constants.MESSAGE_SORT_PROPERTY);
-        return messageRepository.findFirst10ByFeedId(feedId, sort);
+    @Override
+    public List<Message> getAllMessagesByFeedId(long feedId) {
+        return IMessageRepository.findFirst10ByFeedId(feedId, IMessageRepository.MESSAGE_SORT);
     }
 
+    @Override
     public long countMessagesForFeedId(long feedId) {
-        return messageRepository.countByFeedId(feedId);
+        return IMessageRepository.countByFeedId(feedId);
     }
 
     private String getThumbnailFromDescription(String description) {

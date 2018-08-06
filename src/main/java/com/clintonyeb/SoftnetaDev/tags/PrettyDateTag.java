@@ -2,7 +2,6 @@ package com.clintonyeb.SoftnetaDev.tags;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
@@ -12,13 +11,15 @@ import java.util.Date;
 
 public class PrettyDateTag extends SimpleTagSupport {
     private String date;
+    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    private static PrettyTime prettyTime = new PrettyTime();
 
     public void setDate(String date) {
         this.date = date;
     }
 
     @Override
-    public void doTag() throws JspException, IOException {
+    public void doTag() throws IOException {
         String output = "now";
 
         if(date != null){
@@ -33,8 +34,6 @@ public class PrettyDateTag extends SimpleTagSupport {
         out.print(output);
     }
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    private static PrettyTime prettyTime =  new PrettyTime();
     private static String formatDate(String dateString) throws ParseException {
         Date d = formatter.parse(dateString);
         return prettyTime.format(d);

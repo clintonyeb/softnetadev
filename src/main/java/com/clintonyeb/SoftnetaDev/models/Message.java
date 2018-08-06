@@ -1,6 +1,7 @@
 package com.clintonyeb.SoftnetaDev.models;
 
 import com.clintonyeb.SoftnetaDev.services.Constants;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class Message {
     // But for most cases, we can safely assume link is unique for any feed item
     @NotNull
     @Column(unique=true)
+    @URL(message = "Invalid URL given")
     private String link;
 
     private String thumbnail;

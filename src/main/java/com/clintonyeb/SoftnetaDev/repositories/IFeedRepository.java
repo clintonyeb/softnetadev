@@ -7,6 +7,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FeedRepository extends PagingAndSortingRepository<Feed, Long> {
+public interface IFeedRepository extends PagingAndSortingRepository<Feed, Long> {
     Sort FEED_SORT = new Sort(Sort.Direction.ASC, Constants.FEED_SORT_PROPERTY);
 }

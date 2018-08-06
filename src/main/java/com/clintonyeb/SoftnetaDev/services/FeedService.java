@@ -1,8 +1,8 @@
 package com.clintonyeb.SoftnetaDev.services;
 
+import com.clintonyeb.SoftnetaDev.helpers.Utility;
 import com.clintonyeb.SoftnetaDev.models.Feed;
-import com.clintonyeb.SoftnetaDev.models.Message;
-import com.clintonyeb.SoftnetaDev.repositories.FeedRepository;
+import com.clintonyeb.SoftnetaDev.repositories.IFeedRepository;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndImage;
 import com.sun.syndication.io.FeedException;
@@ -10,38 +10,50 @@ import com.sun.syndication.io.SyndFeedInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.Reader;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Service
-public class FeedService {
-
-    private ExecutorService executorService =
-            Executors.newFixedThreadPool(Constants.FEED_SERVICE_THREAD_POOL_SIZE);
+public class FeedService implements IFeedService {
+    private ExecutorService executorService;
 
     @Autowired
-    private FeedRepository feedRepository;
+    private IFeedRepository IFeedRepository;
     @Autowired
     private MessageService messageService;
 
-    public Iterable<Feed> getAllFeeds(int size, int page) {
-        Sort sort = new Sort(Sort.Direction.ASC, Constants.FEED_SORT_PROPERTY);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return feedRepository.findAll(pageable);
+    @PostConstruct
+    private void create() {
+        executorService = Executors.newFixedThreadPool(Constants.FEED_SERVICE_THREAD_POOL_SIZE);
     }
 
-    public Iterable<Feed> getAllFeeds() {
-        return feedRepository.findAll();
+    @PreDestroy
+    private void destroy() {
+        executorService.shutdown();
     }
 
+    @Override
+    public List<Feed> getAllFeeds(int size, int page) {
+        Pageable pageable = PageRequest.of(page, size, IFeedRepository.FEED_SORT);
+        return IFeedRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public List<Feed> getAllFeeds() {
+        return (List<Feed>) IFeedRepository.findAll();
+    }
+
+    @Override
     public Feed getFeed(long feedId) {
-        Optional<Feed> op = feedRepository.findById(feedId);
+        Optional<Feed> op = IFeedRepository.findById(feedId);
         Feed feed;
 
         if (op.isPresent()) {
@@ -51,6 +63,7 @@ public class FeedService {
         return null;
     }
 
+    @Override
     public Feed addFeed(String url, String feed_name) {
         Feed f = new Feed();
 
@@ -58,9 +71,8 @@ public class FeedService {
         f.setUrl(url);
         List entries = setFeedInfo(f);
 
-
         try{
-            Feed feed = feedRepository.save(f);
+            Feed feed = IFeedRepository.save(f);
 
             // start a new thread to handle adding entries
             // so user is not blocked for too long
@@ -73,27 +85,28 @@ public class FeedService {
         }
 
         // return old feed, for now
-        return f;
-    }
-
-    public Iterable<Message> getFeedMessages(Long feedId, int size) {
-        Feed feed = getFeed(feedId);
-
-        if(feed != null) {
-            return messageService.getAllMessagesByFeedId(feed.getId());
-        }
-
         return null;
     }
 
+
+    @Override
     public boolean removeFeed(Long feedId) {
-        feedRepository.deleteById(feedId);
+        IFeedRepository.deleteById(feedId);
         return true;
+    }
+
+    @Override
+    public Feed updateFeedLastUpdated(Feed feed, Date date) {
+        if (feed != null) {
+            feed.setLastUpdated(date);
+            return IFeedRepository.save(feed);
+        }
+        return null;
     }
 
     private List setFeedInfo(Feed feed) {
 
-        Reader rd = UtilityService.makeHTTPRequest(feed.getUrl());
+        Reader rd = Utility.makeHTTPRequest(feed.getUrl());
 
         if (rd != null) {
             try {

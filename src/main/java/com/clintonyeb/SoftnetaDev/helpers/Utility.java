@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class UtilityService {
+public class Utility {
     public static Reader makeHTTPRequest(String url) {
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
@@ -48,5 +48,4 @@ public class UtilityService {
 
         return cal.getTime();
     }
-
 }

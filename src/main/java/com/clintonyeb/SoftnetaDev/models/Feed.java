@@ -1,6 +1,7 @@
 package com.clintonyeb.SoftnetaDev.models;
 
 import com.clintonyeb.SoftnetaDev.services.Constants;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class Feed {
     // We can use it to remove duplicate feeds
     @NotNull
     @Column(unique=true)
+    @URL(message = "Invalid URL given")
     private String url;
 
     private String title;
