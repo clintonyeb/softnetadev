@@ -20,12 +20,12 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class MessageRepositoryTest {
+public class IMessageRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private MessageRepository messageRepository;
+    private IMessageRepository IMessageRepository;
 
     /**
      * Test if messages persisted are able to be retrieved
@@ -36,7 +36,7 @@ public class MessageRepositoryTest {
         // given
         Feed feed = new Feed();
         // setting required fields
-        feed.setUrl("Test");
+        feed.setUrl("https://www.15min.lt/rss");
         feed.setFeedName("Test Feed");
         // feed.setId(1L);
         Feed f = entityManager.persist(feed);
@@ -44,13 +44,13 @@ public class MessageRepositoryTest {
 
         Message mess = new Message();
         mess.setTitle("Good");
-        mess.setLink("Test");
+        mess.setLink("https://www.15min.lt/rss");
         mess.setFeed(feed);
         entityManager.persist(mess);
         entityManager.flush();
 
         // when
-        List<Message> messages = messageRepository.findFirst10ByFeedId(f.getId(),
+        List<Message> messages = IMessageRepository.findFirst10ByFeedId(f.getId(),
                 new Sort(Sort.Direction.ASC, "title"));
 
         // then
@@ -67,7 +67,7 @@ public class MessageRepositoryTest {
         // given
         Feed feed = new Feed();
         // setting required fields
-        feed.setUrl("Test");
+        feed.setUrl("https://www.15min.lt/rss");
         feed.setFeedName("Test Feed");
         // feed.setId(1L);
         Feed f = entityManager.persist(feed);
@@ -78,7 +78,7 @@ public class MessageRepositoryTest {
         for (int i = 0; i < count; i++) {
             Message mess = new Message();
             mess.setTitle("Good");
-            mess.setLink("Test_" + i);
+            mess.setLink("https://www.15min.lt/rss_" + i);
             mess.setFeed(feed);
             entityManager.persist(mess);
         }
@@ -86,7 +86,7 @@ public class MessageRepositoryTest {
         entityManager.flush();
 
         // when
-        List<Message> messages = messageRepository.findFirst10ByFeedId(f.getId(), new Sort(Sort.Direction.ASC, "title"));
+        List<Message> messages = IMessageRepository.findFirst10ByFeedId(f.getId(), new Sort(Sort.Direction.ASC, "title"));
 
         // then
         assertThat(messages.size()).isEqualTo(count);
@@ -101,7 +101,7 @@ public class MessageRepositoryTest {
         // given
         Feed feed = new Feed();
         // setting required fields
-        feed.setUrl("Test");
+        feed.setUrl("https://www.15min.lt/rss");
         feed.setFeedName("Test Feed");
         // feed.setId(1L);
         Feed f = entityManager.persist(feed);
@@ -112,7 +112,7 @@ public class MessageRepositoryTest {
         for (int i = 0; i < count; i++) {
             Message mess = new Message();
             mess.setTitle("Good");
-            mess.setLink("Test_" + i);
+            mess.setLink("https://www.15min.lt/rss_" + i);
             mess.setFeed(feed);
             entityManager.persist(mess);
         }
@@ -120,7 +120,7 @@ public class MessageRepositoryTest {
         entityManager.flush();
 
         // when
-        List<Message> messages = messageRepository.findFirst10ByFeedId(f.getId(), new Sort(Sort.Direction.ASC, "title"));
+        List<Message> messages = IMessageRepository.findFirst10ByFeedId(f.getId(), new Sort(Sort.Direction.ASC, "title"));
 
         // then
         assertThat(messages.size()).isEqualTo(10);
@@ -135,7 +135,7 @@ public class MessageRepositoryTest {
         // given
         Feed feed = new Feed();
         // setting required fields
-        feed.setUrl("Test");
+        feed.setUrl("https://www.15min.lt/rss");
         feed.setFeedName("Test Feed");
         // feed.setId(1L);
         Feed f = entityManager.persist(feed);
@@ -146,7 +146,7 @@ public class MessageRepositoryTest {
         for (int i = 0; i < count; i++) {
             Message mess = new Message();
             mess.setTitle("Good");
-            mess.setLink("Test_" + i);
+            mess.setLink("https://www.15min.lt/rss_" + i);
             mess.setFeed(feed);
             mess.setPublished(Utility.addDays(new Date(), i));
 
@@ -156,11 +156,11 @@ public class MessageRepositoryTest {
         entityManager.flush();
 
         // when
-        List<Message> messages = messageRepository.findFirst10ByFeedId(f.getId(), MessageRepository.MESSAGE_SORT);
+        List<Message> messages = IMessageRepository.findFirst10ByFeedId(f.getId(), IMessageRepository.MESSAGE_SORT);
 
         Message lastMessage = messages.get(0);
         // then
-        assertThat(lastMessage.getLink()).isEqualTo("Test_19");
+        assertThat(lastMessage.getLink()).isEqualTo("https://www.15min.lt/rss_19");
     }
 
     /**
@@ -173,7 +173,7 @@ public class MessageRepositoryTest {
         // given
         Feed feed = new Feed();
         // setting required fields
-        feed.setUrl("Test");
+        feed.setUrl("https://www.15min.lt/rss");
         feed.setFeedName("Test Feed");
         // feed.setId(1L);
         Feed f = entityManager.persist(feed);
@@ -184,7 +184,7 @@ public class MessageRepositoryTest {
         for (int i = 0; i < count; i++) {
             Message mess = new Message();
             mess.setTitle("Good");
-            mess.setLink("Test_" + i);
+            mess.setLink("https://www.15min.lt/rss_" + i);
             mess.setFeed(feed);
             mess.setPublished(new Date());
             entityManager.persist(mess);
@@ -193,7 +193,7 @@ public class MessageRepositoryTest {
         entityManager.flush();
 
         // when
-        int messCount = messageRepository.countByFeedId(f.getId());
+        int messCount = IMessageRepository.countByFeedId(f.getId());
 
         // then
         assertThat(messCount).isEqualTo(count);

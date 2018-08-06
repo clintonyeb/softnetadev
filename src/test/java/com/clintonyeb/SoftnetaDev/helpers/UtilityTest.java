@@ -1,6 +1,5 @@
-package com.clintonyeb.SoftnetaDev.services;
+package com.clintonyeb.SoftnetaDev.helpers;
 
-import com.clintonyeb.SoftnetaDev.helpers.Utility;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
