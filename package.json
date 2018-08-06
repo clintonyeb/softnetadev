@@ -11,7 +11,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devdependencies": {
     "node-sass": "^4.9.2"
   }
 }
