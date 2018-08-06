@@ -54,9 +54,10 @@ public class FeedService {
     public Feed addFeed(String url, String feed_name) {
         Feed f = new Feed();
 
-        List entries = getFeedInformation(f, url);
         f.setFeedName(feed_name);
         f.setUrl(url);
+        List entries = setFeedInfo(f);
+
 
         try{
             Feed feed = feedRepository.save(f);
@@ -68,7 +69,7 @@ public class FeedService {
             return feed;
         } catch (Exception e){
             // duplicate entries are going to throw an exception
-            // TODO: let the user know the feed already exists
+            // TODO: let the user know the feed already exists / duplicate
         }
 
         // return old feed, for now
@@ -90,8 +91,9 @@ public class FeedService {
         return true;
     }
 
-    private List getFeedInformation(Feed feed, String url) {
-        Reader rd = UtilityService.makeHTTPRequest(url);
+    private List setFeedInfo(Feed feed) {
+
+        Reader rd = UtilityService.makeHTTPRequest(feed.getUrl());
 
         if (rd != null) {
             try {

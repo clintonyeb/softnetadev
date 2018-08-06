@@ -48,14 +48,13 @@ public class MessageService {
 
     public void addMessages(Feed feed, List entries) {
         for (SyndEntry entry : (List<SyndEntry>) entries) {
+            Message message = new Message();
 
             String description = entry.getDescription().getValue();
 
             // some feed items have their images in their descriptions.
             // Parse the image out before applying any formatting.
-
             String thumbnail = getThumbnailFromDescription(description);
-
             if (thumbnail == null || thumbnail.length() < 1) {
                 thumbnail = feed.getImageUrl();
             }
@@ -63,18 +62,11 @@ public class MessageService {
             // clean up description
             description = cleanUpDescription(description);
 
-            String title = entry.getTitle();
-            // String uri = entry.getUri();
-            Date published = entry.getPublishedDate();
-            String link = entry.getLink();
-
-            Message message = new Message();
-            message.setFeed(feed);
             message.setDescription(description);
-            message.setLink(link);
-            message.setPublished(published);
-            message.setTitle(title);
             message.setThumbnail(thumbnail);
+            message.setTitle(entry.getTitle());
+            message.setPublished(entry.getPublishedDate());
+            message.setLink(entry.getLink());
 
             try {
                 messageRepository.save(message);
