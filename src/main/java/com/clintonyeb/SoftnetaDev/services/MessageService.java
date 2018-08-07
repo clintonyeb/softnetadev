@@ -43,6 +43,7 @@ public class MessageService implements IMessageService {
                 return (List<SyndEntry>) syndFeed.getEntries();
 
             } catch (FeedException e) {
+                // invalid xml received
                 e.printStackTrace();
             }
         }

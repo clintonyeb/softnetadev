@@ -6,7 +6,9 @@ Assignment for Development Task as a Softneta job application requirement.
 
 1. Java 8
 2. MySQL
-    
+
+The application was tested using Linux - Debian 9.1, MYSQL version 15.1 and OpendJDK version 1.8.0_171.
+It is nevertheless expected to work on major platforms.
 
 ### Installation
 
@@ -45,14 +47,29 @@ You can then run your application using the main class (src/main/java/com/clinto
 This project uses the MVCS architecture.
 
 1. Models (Data Access Objects) - (src/main/java/com/clintonyeb/SoftnetaDev/models)
+2. View Layer (JSP)- (src/main/webapp/WEB-INF/views)
+3. Controller (Coordinator for Views and Models) - (src/main/java/com/clintonyeb/SoftnetaDev/controllers) 
+3. Service Layer (Services controllers) - (src/main/java/com/clintonyeb/SoftnetaDev/services) 
 
-These are abstractions that your service layer will call to get/update the data it needs. This layer will generally either call a Database or some other system (eg: LDAP server, web service, or NoSql-type DB)
-
-2. View Layer: Your MVC framework & code of choice
-3. Service Layer: Your Controller will call this layer's objects to get or update Models, or other requests.
+Tests:
+The application is fully tested. (src/test)
 
 ### Features
 
+1. Beautify interface - Cards
+2. Generating RSS Feed from given URL
+3. Front-End and Back-End User Data Validation
+4. Deleting feeds
+5. Adding new feeds
+6. Background feed refresh
+7. Good error handling
+8. Async services for speed
+
 ### Improvements
+
+1. User management - Login and Registration
+2. Web Sockets - for instant notifications on RSS Feeds
+3. Adding more tests
+4. Improving UI
 
 ### Known Issues

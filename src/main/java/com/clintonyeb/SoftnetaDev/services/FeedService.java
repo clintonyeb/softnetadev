@@ -133,6 +133,7 @@ public class FeedService implements IFeedService {
                 return syndFeed.getEntries();
 
             } catch (FeedException e) {
+                // invalid xml received
                 e.printStackTrace();
             }
         }
