@@ -1,8 +1,10 @@
 ## Softneta Test Application
 
-### Description: 
+Assignment for Development Task as a Softneta job application requirement.
 
 ### Installation
+
+
 
 ### Architecture
 
