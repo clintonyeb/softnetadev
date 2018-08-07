@@ -27,8 +27,7 @@ public class ScheduledService {
 
         for (Feed fd : feeds) {
             List entries = messageService.getFeedMessages(fd);
-            if (entries != null)
-                messageService.addMessages(fd, entries);
+            messageService.addMessages(fd, entries);
         }
     }
 }

@@ -52,6 +52,8 @@ public class MessageService implements IMessageService {
 
     @Override
     public void addMessages(Feed feed, List<SyndEntry> entries) {
+        if(feed == null || entries == null) return;
+
         for (SyndEntry entry : entries) {
             Message message = new Message();
 
