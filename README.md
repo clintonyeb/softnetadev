@@ -78,7 +78,7 @@ The application is fully tested. (src/test)
 
 ### Features
 
-1. Beautify interface - Cards
+1. Beautiful user-interface using cards
 2. Generating RSS Feed from given URL
 3. Front-End and Back-End User Data Validation
 4. Deleting feeds
@@ -86,8 +86,12 @@ The application is fully tested. (src/test)
 6. Background feed refresh
 7. Good error handling
 8. Async services for speed
+9. Pretty Formatted time
+10. Feeds sorted according to last upadted (descending)
+11. Feed Items sorted according to last published
+12. Nice image display
 
-### Improvements
+### Possible Future Improvements
 
 1. User management - Login and Registration
 2. Web Sockets - for instant notifications on RSS Feeds
