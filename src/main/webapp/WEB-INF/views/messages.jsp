@@ -9,18 +9,25 @@
 
 <section class="section">
     <div class="container">
-        <div class="ui divided items">
-           <c:forEach var="mess" items="${messages}">
-            <c:set var="mess" value="${mess}" scope="request"/>
-                <jsp:include page="includes/message.jsp"></jsp:include>
-           </c:forEach>
-        </div>
+
+        <c:if test="${empty messages}">
+            <h2 class="subtitle is-4 has-text-centered">This feed has no articles yet</h2>
+        </c:if>
+
+        <c:if test="${not empty messages}">
+            <div class="ui divided items">
+                <c:forEach var="mess" items="${messages}">
+                    <c:set var="mess" value="${mess}" scope="request" />
+                    <jsp:include page="includes/message.jsp"></jsp:include>
+                </c:forEach>
+            </div>
+        </c:if>
 
         <hr>
         <p class="has-text-right">
             <a class="button is-danger" id="remove-feed-btn" onclick="removeFeed(${feed.id})">Delete This Feed</a>
         </p>
-        
+
     </div>
- </section>
+</section>
 <jsp:include page="includes/footer.jsp"></jsp:include>

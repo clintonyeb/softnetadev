@@ -26,6 +26,12 @@ Login and create a username and password for the application to use.
 This create the default `username` and a `password` that the application is already configured with.
 If you wish to change the provided username and password, then you will have to change the configurations in (src/main/resources/application.properties).
 
+Finally, create the database that the application requires:
+```sql
+CREATE DATABASE feeds;
+```
+
+
 #### Running the Application
 
 1. Running as a Packaged Application
