@@ -28,7 +28,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 public class FeedServiceTest {
 
     @Autowired
-    IFeedService feedService;
+    FeedService feedService;
     @Autowired
     MessageService messageService;
     @Autowired

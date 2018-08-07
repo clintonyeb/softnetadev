@@ -73,7 +73,7 @@ This project uses the MVCS architecture.
 3. Controller (Coordinator for Views and Models) - (src/main/java/com/clintonyeb/SoftnetaDev/controllers) 
 3. Service Layer (Services controllers) - (src/main/java/com/clintonyeb/SoftnetaDev/services) 
 
-Tests:
+### Tests
 The application is fully tested. (src/test)
 
 ### Features
@@ -83,7 +83,7 @@ The application is fully tested. (src/test)
 3. Front-End and Back-End User Data Validation
 4. Deleting feeds
 5. Adding new feeds
-6. Background feed refresh
+6. Background service to periodically update feed
 7. Good error handling
 8. Async services for speed
 9. Pretty Formatted time

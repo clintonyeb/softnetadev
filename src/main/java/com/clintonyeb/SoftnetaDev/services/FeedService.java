@@ -71,7 +71,7 @@ public class FeedService implements IFeedService {
         f.setUrl(url);
         List entries = setFeedInfo(f);
 
-        try{
+        try {
             Feed feed = IFeedRepository.save(f);
 
             // start a new thread to handle adding entries
@@ -79,7 +79,7 @@ public class FeedService implements IFeedService {
             executorService.execute(() -> messageService.addMessages(feed, entries));
 
             return feed;
-        } catch (Exception e){
+        } catch (Exception e) {
             // duplicate entries are going to throw an exception
             // TODO: let the user know the feed already exists / duplicate
         }
@@ -119,11 +119,11 @@ public class FeedService implements IFeedService {
                 String imgUrl;
                 SyndImage image = syndFeed.getImage();
 
-                if(image != null) {
-                     imgUrl = image.getUrl();
+                if (image != null) {
+                    imgUrl = image.getUrl();
                     if (imgUrl.length() < 1) {
                         imgUrl = Constants.DEFAULT_IMAGE;
-                     }
+                    }
                 } else {
                     imgUrl = Constants.DEFAULT_IMAGE;
                 }

@@ -11,14 +11,14 @@ import java.util.Set;
 @Entity
 public class Feed {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     // According to RSS Specification (https://validator.w3.org/feed/docs/rss2.html)
     // Uri is guaranteed to be unique for every feed
     // We can use it to remove duplicate feeds
     @NotNull
-    @Column(unique=true)
+    @Column(unique = true)
     @URL(message = "Invalid URL given")
     private String url;
 
@@ -34,7 +34,7 @@ public class Feed {
     @NotNull
     private String feedName;
 
-    @OneToMany(targetEntity=Message.class, mappedBy="feed", fetch=FetchType.LAZY)
+    @OneToMany(targetEntity = Message.class, mappedBy = "feed", fetch = FetchType.LAZY)
     private Set<Message> messages;
 
     public Long getId() {
