@@ -83,7 +83,7 @@ The application is fully tested. (src/test)
 3. Front-End and Back-End User Data Validation
 4. Deleting feeds
 5. Adding new feeds
-6. Background feed refresh
+6. Background service to periodically update feed
 7. Good error handling
 8. Async services for speed
 9. Pretty Formatted time

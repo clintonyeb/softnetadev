@@ -34,7 +34,8 @@ public class FeedServiceTest {
     @Autowired
     private IFeedRepository feedRepository;
     @Autowired
-    private IMessageRepository messageRepository;
+    private IMessageRepository messageRepository
+            ;
     @Autowired
     private TestEntityManager entityManager;
 
