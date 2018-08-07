@@ -41,6 +41,7 @@ Note that, the jar file will not work if you changed the MYSQL default username 
 For a more involved running, setup your MYSQL instance and provide the username and password in the application.properties configuration file.
 You can then run your application using the main class (src/main/java/com/clintonyeb/SoftnetaDev/Application.java)
 
+Visit: `localhost:8080` to view application
 
 ### Architecture
 
