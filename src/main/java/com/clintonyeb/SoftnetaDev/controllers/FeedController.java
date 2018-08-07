@@ -49,9 +49,10 @@ public class FeedController {
     }
 
     @PostMapping("/delete_feed")
-    public String delete_feed(@RequestParam(name = "feed_id") String feed_id,
+    public String delete_feed(@RequestParam(name = "feed_id") Long feedId,
                               Model model) {
-        boolean status = feedService.removeFeed(Long.parseLong(feed_id));
+        boolean status = feedService.removeFeed(feedId);
+
         if (status) {
             return "redirect:/feeds";
         }
