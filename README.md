@@ -73,7 +73,7 @@ This project uses the MVCS architecture.
 3. Controller (Coordinator for Views and Models) - (src/main/java/com/clintonyeb/SoftnetaDev/controllers) 
 3. Service Layer (Services controllers) - (src/main/java/com/clintonyeb/SoftnetaDev/services) 
 
-Tests:
+### Tests:
 The application is fully tested. (src/test)
 
 ### Features
