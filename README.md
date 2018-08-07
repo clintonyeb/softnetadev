@@ -58,7 +58,10 @@ Run from the IDE.
 
 The application can be managed by maven. 
 First install maven: [https://maven.apache.org/install.html]
-And then from the root directory, > mvn clean install.
+And then from the root directory, run
+
+> mvn clean install.
+
 A jar file is generated and put into the target directory.
 
 ### Architecture
