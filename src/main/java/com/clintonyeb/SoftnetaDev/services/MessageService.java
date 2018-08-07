@@ -27,9 +27,9 @@ public class MessageService implements IMessageService {
     private static final Logger log = LoggerFactory.getLogger(MessageService.class);
 
     @Autowired
-    private IMessageRepository IMessageRepository;
+    private IMessageRepository messageRepository;
     @Autowired
-    private IFeedService IFeedService;
+    private IFeedService feedService;
 
     @Override
     public List<SyndEntry> getFeedMessages(Feed feed) {
@@ -53,7 +53,7 @@ public class MessageService implements IMessageService {
 
     @Override
     public void addMessages(Feed feed, List<SyndEntry> entries) {
-        if(feed == null || entries == null) return;
+        if (feed == null || entries == null) return;
 
         for (SyndEntry entry : entries) {
             Message message = new Message();
@@ -79,12 +79,12 @@ public class MessageService implements IMessageService {
             message.setFeed(feed);
 
             try {
-                IMessageRepository.save(message);
+                messageRepository.save(message);
                 log.info("Saved new message for feed: " + feed.getId());
 
                 // feed has an updated message
                 // so updated its last updated date
-                IFeedService.updateFeedLastUpdated(feed, new Date());
+                feedService.updateFeedLastUpdated(feed, new Date());
             } catch (Exception e) {
                 // duplicate entries will throw an exception
                 // ignore them
@@ -95,12 +95,12 @@ public class MessageService implements IMessageService {
 
     @Override
     public List<Message> getAllMessagesByFeedId(long feedId) {
-        return IMessageRepository.findFirst10ByFeedId(feedId, IMessageRepository.MESSAGE_SORT);
+        return messageRepository.findFirst10ByFeedId(feedId, messageRepository.MESSAGE_SORT);
     }
 
     @Override
     public long countMessagesForFeedId(long feedId) {
-        return IMessageRepository.countByFeedId(feedId);
+        return messageRepository.countByFeedId(feedId);
     }
 
     private String getThumbnailFromDescription(String description) {
@@ -114,7 +114,7 @@ public class MessageService implements IMessageService {
         description = description.replaceAll("\\<.*?\\>", "");
 
         // make it one line.
-        description = description.replaceAll("\\s+"," ");
+        description = description.replaceAll("\\s+", " ");
 
         // trim string
         description = description.trim();

@@ -10,9 +10,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PrettyDateTag extends SimpleTagSupport {
-    private String date;
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     private static PrettyTime prettyTime = new PrettyTime();
+    private String date;
+
+    private static String formatDate(String dateString) throws ParseException {
+        Date d = formatter.parse(dateString);
+        return prettyTime.format(d);
+    }
 
     public void setDate(String date) {
         this.date = date;
@@ -22,20 +27,15 @@ public class PrettyDateTag extends SimpleTagSupport {
     public void doTag() throws IOException {
         String output = "now";
 
-        if(date != null){
+        if (date != null) {
             try {
                 output = formatDate(date);
-            } catch (Exception e){
+            } catch (Exception e) {
                 // pass
             }
         }
 
         JspWriter out = getJspContext().getOut();
         out.print(output);
-    }
-
-    private static String formatDate(String dateString) throws ParseException {
-        Date d = formatter.parse(dateString);
-        return prettyTime.format(d);
     }
 }

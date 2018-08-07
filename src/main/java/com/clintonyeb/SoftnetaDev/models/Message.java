@@ -10,11 +10,11 @@ import java.util.Date;
 @Entity
 public class Message {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="feed_id")
+    @JoinColumn(name = "feed_id")
     @NotNull
     private Feed feed;
 
@@ -24,7 +24,7 @@ public class Message {
     // Link is even an optional field
     // But for most cases, we can safely assume link is unique for any feed item
     @NotNull
-    @Column(unique=true)
+    @Column(unique = true)
     @URL(message = "Invalid URL given")
     private String link;
 

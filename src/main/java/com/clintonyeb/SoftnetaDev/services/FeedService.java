@@ -26,7 +26,7 @@ public class FeedService implements IFeedService {
     private ExecutorService executorService;
 
     @Autowired
-    private IFeedRepository IFeedRepository;
+    private IFeedRepository feedRepository;
     @Autowired
     private MessageService messageService;
 
@@ -42,18 +42,18 @@ public class FeedService implements IFeedService {
 
     @Override
     public List<Feed> getAllFeeds(int size, int page) {
-        Pageable pageable = PageRequest.of(page, size, IFeedRepository.FEED_SORT);
-        return IFeedRepository.findAll(pageable).getContent();
+        Pageable pageable = PageRequest.of(page, size, feedRepository.FEED_SORT);
+        return feedRepository.findAll(pageable).getContent();
     }
 
     @Override
     public List<Feed> getAllFeeds() {
-        return (List<Feed>) IFeedRepository.findAll();
+        return (List<Feed>) feedRepository.findAll();
     }
 
     @Override
     public Feed getFeed(long feedId) {
-        Optional<Feed> op = IFeedRepository.findById(feedId);
+        Optional<Feed> op = feedRepository.findById(feedId);
         Feed feed;
 
         if (op.isPresent()) {
@@ -71,15 +71,15 @@ public class FeedService implements IFeedService {
         f.setUrl(url);
         List entries = setFeedInfo(f);
 
-        try{
-            Feed feed = IFeedRepository.save(f);
+        try {
+            Feed feed = feedRepository.save(f);
 
             // start a new thread to handle adding entries
             // so user is not blocked for too long
             executorService.execute(() -> messageService.addMessages(feed, entries));
 
             return feed;
-        } catch (Exception e){
+        } catch (Exception e) {
             // duplicate entries are going to throw an exception
             // TODO: let the user know the feed already exists / duplicate
         }
@@ -91,7 +91,7 @@ public class FeedService implements IFeedService {
 
     @Override
     public boolean removeFeed(Long feedId) {
-        IFeedRepository.deleteById(feedId);
+        feedRepository.deleteById(feedId);
         return true;
     }
 
@@ -99,7 +99,7 @@ public class FeedService implements IFeedService {
     public Feed updateFeedLastUpdated(Feed feed, Date date) {
         if (feed != null) {
             feed.setLastUpdated(date);
-            return IFeedRepository.save(feed);
+            return feedRepository.save(feed);
         }
         return null;
     }
@@ -119,11 +119,11 @@ public class FeedService implements IFeedService {
                 String imgUrl;
                 SyndImage image = syndFeed.getImage();
 
-                if(image != null) {
-                     imgUrl = image.getUrl();
+                if (image != null) {
+                    imgUrl = image.getUrl();
                     if (imgUrl.length() < 1) {
                         imgUrl = Constants.DEFAULT_IMAGE;
-                     }
+                    }
                 } else {
                     imgUrl = Constants.DEFAULT_IMAGE;
                 }

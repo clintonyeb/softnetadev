@@ -15,7 +15,7 @@ public class ScheduledService {
     private static final Logger log = LoggerFactory.getLogger(ScheduledService.class);
 
     @Autowired
-    private IFeedService IFeedService;
+    private IFeedService feedService;
     @Autowired
     private MessageService messageService;
 
@@ -23,7 +23,7 @@ public class ScheduledService {
     public void fetchMessages() {
         log.info("Fetching new messages");
 
-        List<Feed> feeds = IFeedService.getAllFeeds();
+        List<Feed> feeds = feedService.getAllFeeds();
 
         for (Feed fd : feeds) {
             List entries = messageService.getFeedMessages(fd);

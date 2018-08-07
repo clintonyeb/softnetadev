@@ -32,9 +32,9 @@ public class FeedServiceTest {
     @Autowired
     MessageService messageService;
     @Autowired
-    private IFeedRepository IFeedRepository;
+    private IFeedRepository feedRepository;
     @Autowired
-    private IMessageRepository IMessageRepository;
+    private IMessageRepository messageRepository;
     @Autowired
     private TestEntityManager entityManager;
 
@@ -212,12 +212,12 @@ public class FeedServiceTest {
         Feed feed = new Feed();
         feed.setUrl("Test");
         feed.setFeedName("Test Feed");
-        Feed f = IFeedRepository.save(feed);
+        Feed f = feedRepository.save(feed);
 
         Feed feed2 = new Feed();
         feed.setUrl("Test");
         feed.setFeedName("Test Feed");
-        Feed f2 = IFeedRepository.save(feed2);
+        Feed f2 = feedRepository.save(feed2);
 
         // then
         assertThat(f).isNotEqualTo(f2);

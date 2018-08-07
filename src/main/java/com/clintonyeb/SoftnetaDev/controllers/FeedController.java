@@ -3,7 +3,6 @@ package com.clintonyeb.SoftnetaDev.controllers;
 import com.clintonyeb.SoftnetaDev.models.Feed;
 import com.clintonyeb.SoftnetaDev.services.IFeedService;
 import com.clintonyeb.SoftnetaDev.services.IMessageService;
-import com.clintonyeb.SoftnetaDev.services.MessageService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,13 +33,14 @@ public class FeedController {
     }
 
     @PostMapping("/feeds")
-    public @ResponseBody String post_feed(@RequestParam(name="url") String url,
-                 @RequestParam(name="feed_name") String feedName,
-                 Model model) {
+    public @ResponseBody
+    String post_feed(@RequestParam(name = "url") String url,
+                     @RequestParam(name = "feed_name") String feedName,
+                     Model model) {
 
         Feed feed = feedService.addFeed(url, feedName);
 
-        if(feed != null) {
+        if (feed != null) {
             Gson gson = new Gson();
             return gson.toJson(feed);
         }
@@ -49,10 +49,10 @@ public class FeedController {
     }
 
     @PostMapping("/delete_feed")
-    public String delete_feed(@RequestParam(name="feed_id") String feed_id,
-                                          Model model) {
+    public String delete_feed(@RequestParam(name = "feed_id") String feed_id,
+                              Model model) {
         boolean status = feedService.removeFeed(Long.parseLong(feed_id));
-        if(status) {
+        if (status) {
             return "redirect:/feeds";
         }
 

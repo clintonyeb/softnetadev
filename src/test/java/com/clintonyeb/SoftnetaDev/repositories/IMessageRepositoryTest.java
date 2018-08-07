@@ -25,7 +25,7 @@ public class IMessageRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private IMessageRepository IMessageRepository;
+    private IMessageRepository messageRepository;
 
     /**
      * Test if messages persisted are able to be retrieved
@@ -50,7 +50,7 @@ public class IMessageRepositoryTest {
         entityManager.flush();
 
         // when
-        List<Message> messages = IMessageRepository.findFirst10ByFeedId(f.getId(),
+        List<Message> messages = messageRepository.findFirst10ByFeedId(f.getId(),
                 new Sort(Sort.Direction.ASC, "title"));
 
         // then
@@ -86,7 +86,7 @@ public class IMessageRepositoryTest {
         entityManager.flush();
 
         // when
-        List<Message> messages = IMessageRepository.findFirst10ByFeedId(f.getId(), new Sort(Sort.Direction.ASC, "title"));
+        List<Message> messages = messageRepository.findFirst10ByFeedId(f.getId(), new Sort(Sort.Direction.ASC, "title"));
 
         // then
         assertThat(messages.size()).isEqualTo(count);
@@ -120,7 +120,7 @@ public class IMessageRepositoryTest {
         entityManager.flush();
 
         // when
-        List<Message> messages = IMessageRepository.findFirst10ByFeedId(f.getId(), new Sort(Sort.Direction.ASC, "title"));
+        List<Message> messages = messageRepository.findFirst10ByFeedId(f.getId(), new Sort(Sort.Direction.ASC, "title"));
 
         // then
         assertThat(messages.size()).isEqualTo(10);
@@ -156,7 +156,7 @@ public class IMessageRepositoryTest {
         entityManager.flush();
 
         // when
-        List<Message> messages = IMessageRepository.findFirst10ByFeedId(f.getId(), IMessageRepository.MESSAGE_SORT);
+        List<Message> messages = messageRepository.findFirst10ByFeedId(f.getId(), messageRepository.MESSAGE_SORT);
 
         Message lastMessage = messages.get(0);
         // then
@@ -193,7 +193,7 @@ public class IMessageRepositoryTest {
         entityManager.flush();
 
         // when
-        int messCount = IMessageRepository.countByFeedId(f.getId());
+        int messCount = messageRepository.countByFeedId(f.getId());
 
         // then
         assertThat(messCount).isEqualTo(count);
