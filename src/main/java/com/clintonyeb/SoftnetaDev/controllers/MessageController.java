@@ -29,7 +29,7 @@ public class MessageController {
 
         model.addAttribute("feed", feed);
         model.addAttribute("messages", messages);
-        model.addAttribute("article_count", messageService.countMessagesForFeedId(feed.getId()));
+        model.addAttribute("article_count", messageService.countMessagesForFeedId(feedId));
 
         return "messages";
     }
