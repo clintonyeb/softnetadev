@@ -28,7 +28,7 @@ public class FeedService implements IFeedService {
     @Autowired
     private IFeedRepository IFeedRepository;
     @Autowired
-    private MessageService messageService;
+    private IMessageService IMessageService;
 
     @PostConstruct
     private void create() {
@@ -76,7 +76,7 @@ public class FeedService implements IFeedService {
 
             // start a new thread to handle adding entries
             // so user is not blocked for too long
-            executorService.execute(() -> messageService.addMessages(feed, entries));
+            executorService.execute(() -> IMessageService.addMessages(feed, entries));
 
             return feed;
         } catch (Exception e) {

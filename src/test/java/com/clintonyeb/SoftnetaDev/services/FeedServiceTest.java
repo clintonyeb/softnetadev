@@ -28,20 +28,21 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 public class FeedServiceTest {
 
     @Autowired
-    FeedService feedService;
+    IFeedService IFeedService;
     @Autowired
-    MessageService messageService;
+    IMessageService IMessageService;
     @Autowired
     private IFeedRepository IFeedRepository;
     @Autowired
-    private IMessageRepository IMessageRepository;
+    private IMessageRepository IMessageRepository
+            ;
     @Autowired
     private TestEntityManager entityManager;
 
     @Test
     public void getAllFeedTest_1() {
         // when
-        List<Feed> feeds = feedService.getAllFeeds();
+        List<Feed> feeds = IFeedService.getAllFeeds();
 
         // then
         assertThat(feeds.size()).isEqualTo(0);
@@ -59,7 +60,7 @@ public class FeedServiceTest {
         entityManager.flush();
 
         // when
-        List<Feed> feeds = feedService.getAllFeeds();
+        List<Feed> feeds = IFeedService.getAllFeeds();
 
         // then
         assertThat(feeds.size()).isEqualTo(1);
@@ -82,7 +83,7 @@ public class FeedServiceTest {
         entityManager.flush();
 
         // when
-        List<Feed> feeds = feedService.getAllFeeds();
+        List<Feed> feeds = IFeedService.getAllFeeds();
 
         // then
         assertThat(feeds.size()).isEqualTo(count);
@@ -106,7 +107,7 @@ public class FeedServiceTest {
 
         int n = 3;
         // when
-        List<Feed> feeds = feedService.getAllFeeds(n, 0);
+        List<Feed> feeds = IFeedService.getAllFeeds(n, 0);
 
         // then
         assertThat(feeds.size()).isEqualTo(n);
@@ -130,7 +131,7 @@ public class FeedServiceTest {
 
         int n = 3;
         // when
-        List<Feed> feeds = feedService.getAllFeeds(n, 1);
+        List<Feed> feeds = IFeedService.getAllFeeds(n, 1);
 
         // then
         assertThat(feeds.size()).isEqualTo(count - n);
@@ -147,7 +148,7 @@ public class FeedServiceTest {
         Feed f = entityManager.persist(feed);
         entityManager.flush();
 
-        Feed testFeed = feedService.getFeed(f.getId());
+        Feed testFeed = IFeedService.getFeed(f.getId());
 
         // then
         assertThat(testFeed).isEqualTo(f);
@@ -164,7 +165,7 @@ public class FeedServiceTest {
         Feed f = entityManager.persist(feed);
         entityManager.flush();
 
-        Feed testFeed = feedService.getFeed(12);
+        Feed testFeed = IFeedService.getFeed(12);
 
         // then
         assertThat(testFeed).isEqualTo(null);
@@ -181,7 +182,7 @@ public class FeedServiceTest {
         Feed f = entityManager.persist(feed);
         entityManager.flush();
 
-        Feed testFeed = feedService.getFeed(-1);
+        Feed testFeed = IFeedService.getFeed(-1);
 
         // then
         assertThat(testFeed).isEqualTo(null);
@@ -193,14 +194,14 @@ public class FeedServiceTest {
         int count = 5;
 
         for (int i = 0; i < count; i++) {
-            feedService.addFeed("https://www.15min.lt/rss_" + i, "Test Feed_" + i);
+            IFeedService.addFeed("https://www.15min.lt/rss_" + i, "Test Feed_" + i);
         }
 
         entityManager.flush();
 
         int n = 3;
         // when
-        List<Feed> feeds = feedService.getAllFeeds(n, 0);
+        List<Feed> feeds = IFeedService.getAllFeeds(n, 0);
 
         // then
         assertThat(feeds.size()).isEqualTo(n);
@@ -234,10 +235,10 @@ public class FeedServiceTest {
         Feed f = entityManager.persist(feed);
         entityManager.flush();
 
-        feedService.removeFeed(f.getId());
+        IFeedService.removeFeed(f.getId());
 
         // when
-        List<Feed> feeds = feedService.getAllFeeds();
+        List<Feed> feeds = IFeedService.getAllFeeds();
 
         // then
         assertThat(feeds.size()).isEqualTo(0);
@@ -246,7 +247,7 @@ public class FeedServiceTest {
     @Test(expected = Exception.class)
     public void removeFeedTest_invalid_id() {
         // when
-        assertThat(feedService.removeFeed(-1L));
+        assertThat(IFeedService.removeFeed(-1L));
     }
 
     @Test
@@ -263,7 +264,7 @@ public class FeedServiceTest {
 
         // when
         Date newDate = Utility.addDays(new Date(), 1);
-        Feed updatedFeed = feedService.updateFeedLastUpdated(f, newDate);
+        Feed updatedFeed = IFeedService.updateFeedLastUpdated(f, newDate);
 
         // then
         assertThat(updatedFeed.getLastUpdated()).isEqualTo(newDate);
