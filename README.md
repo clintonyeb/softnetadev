@@ -23,25 +23,37 @@ Login and create a username and password for the application to use.
     GRANT ALL PRIVILEGES ON *.* TO 'softneta'@'localhost' IDENTIFIED BY 'softnetapassword';
 ```
 
-This create a `username` and a password as the application is already configured with (src/main/resources/application.properties).
-If you wish to change the provided username and password, then you will have to change the configuration as well.
+This create the default `username` and a `password` that the application is already configured with.
+If you wish to change the provided username and password, then you will have to change the configurations in (src/main/resources/application.properties).
 
 #### Running the Application
 
-1. Easy Run
+1. Running as a Packaged Application
 
 After MYSQL is setup, you can run the application from the included jar file.
 
-Note that, the jar file will not work if you changed the MYSQL default username and password.
-
 >java -jar target/softnetadev-0.0.1.jar  
 
-2. Manual Run
+> Visit: `localhost:8080` to view application
+
+Note that, the jar file will not work if you changed the MYSQL default username and password. You will need to manually build the jar file again.
+
+
+2. Running from an IDE
 
 For a more involved running, setup your MYSQL instance and provide the username and password in the application.properties configuration file.
 You can then run your application using the main class (src/main/java/com/clintonyeb/SoftnetaDev/Application.java)
 
-Visit: `localhost:8080` to view application
+Open the application in your favorite IDE (Intellij Idea, Eclipse, Netbeans, Visual Studio).
+
+Run from the IDE.
+
+3. Packaging into a jar file
+
+The application can be managed by maven. 
+First install maven: [https://maven.apache.org/install.html]
+And then from the root directory, > mvn clean install.
+A jar file is generated and put into the target directory.
 
 ### Architecture
 
