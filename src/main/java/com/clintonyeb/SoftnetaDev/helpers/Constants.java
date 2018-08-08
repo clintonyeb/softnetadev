@@ -1,4 +1,4 @@
-package com.clintonyeb.SoftnetaDev.services;
+package com.clintonyeb.SoftnetaDev.helpers;
 
 public interface Constants {
     String DEFAULT_IMAGE = "/images/logo.png";

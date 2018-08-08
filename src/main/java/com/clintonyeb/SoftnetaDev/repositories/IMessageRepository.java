@@ -1,7 +1,7 @@
 package com.clintonyeb.SoftnetaDev.repositories;
 
 import com.clintonyeb.SoftnetaDev.models.Message;
-import com.clintonyeb.SoftnetaDev.services.Constants;
+import com.clintonyeb.SoftnetaDev.helpers.Constants;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;

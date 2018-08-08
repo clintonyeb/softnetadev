@@ -1,6 +1,6 @@
 package com.clintonyeb.SoftnetaDev.models;
 
-import com.clintonyeb.SoftnetaDev.services.Constants;
+import com.clintonyeb.SoftnetaDev.helpers.Constants;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
