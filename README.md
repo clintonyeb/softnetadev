@@ -78,7 +78,7 @@ The application is fully tested. (src/test)
 
 ### Features
 
-1. Beautiful user-interface using cards
+1. Beautiful and Responsive user-interface
 2. Generating RSS Feed from given URL
 3. Front-End and Back-End User Data Validation
 4. Deleting feeds
