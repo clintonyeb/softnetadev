@@ -65,10 +65,10 @@ public class FeedService implements IFeedService {
     }
 
     @Override
-    public Feed addFeed(String url, String feed_name) {
+    public Feed addFeed(String url, String feedName) {
         Feed f = new Feed();
 
-        f.setFeedName(feed_name);
+        f.setFeedName(feedName);
         f.setUrl(url);
         List entries = setFeedInfo(f);
 
