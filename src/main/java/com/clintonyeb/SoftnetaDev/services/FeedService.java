@@ -85,7 +85,6 @@ public class FeedService implements IFeedService {
             // TODO: let the user know the feed already exists / duplicate
         }
 
-        // return old feed, for now
         return null;
     }
 

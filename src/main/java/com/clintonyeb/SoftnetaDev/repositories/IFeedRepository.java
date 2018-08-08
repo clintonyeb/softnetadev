@@ -1,7 +1,7 @@
 package com.clintonyeb.SoftnetaDev.repositories;
 
-import com.clintonyeb.SoftnetaDev.models.Feed;
 import com.clintonyeb.SoftnetaDev.helpers.Constants;
+import com.clintonyeb.SoftnetaDev.models.Feed;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
