@@ -68,7 +68,7 @@ It is nevertheless expected to work on major platforms.
 
 ### Installation
 
-#### Configuring MYSQL
+#### Database Configuration
 
 You need to configure a MYSQL instance to be able to run the application. The application uses an in-mmenory database(h2) for testing, but requires a real database to run.
 
@@ -90,6 +90,16 @@ CREATE DATABASE feeds;
 
 #### Running the Application
 
+```
+git clone https://github.com/clintonyeb/softnetadev.git
+cd softnetadev
+./mvnw package
+java -jar target/softnetadev.jar
+```
+
+> You can then access petclinic here: [localhost:8080](http://localhost:8080) to view application
+
+
 1. Running as a Packaged Application
 
 After MYSQL is setup, you can run the application from the included jar file.
@@ -110,7 +120,11 @@ Open the application in your favorite IDE (Intellij Idea, Eclipse, Netbeans, Vis
 
 Run from the IDE.
 
-3. Packaging into a jar file
+3. Or you can run it from Maven directly using the Spring Boot Maven plugin. If you do this it will pick up changes that you make in the project immediately (changes to Java source files require a compile as well - most people use an IDE for this):
+
+./mvnw spring-boot:run
+
+Packaging into a jar file
 
 The application can be managed by maven. 
 First install maven: [https://maven.apache.org/install.html]
@@ -122,6 +136,7 @@ A jar file is generated and put into the target directory.
 
 
 ### Tests
+
 The application is fully tested. (src/test)
 
 
@@ -131,6 +146,8 @@ The application is fully tested. (src/test)
 2. Web Sockets - for instant notifications on RSS Feeds
 3. Adding more tests
 4. Improving UI
+5. Docker support for easy installation
+
 
 ### Known Issues
 
