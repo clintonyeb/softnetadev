@@ -33,7 +33,7 @@ public class MessageController {
      * @return List of feed items
      */
     @GetMapping("/messages")
-    public String get_feed_messages(@RequestParam(name = "size", required = false, defaultValue = "10") String size,
+    public String getFeedMessages(@RequestParam(name = "size", required = false, defaultValue = "10") String size,
                                     @RequestParam(name = "feed_id") long feedId,
                                     Model model) {
         Application.logger.info("Executing request to get list of items for a feed.");

@@ -30,7 +30,7 @@ public class FeedController {
     // by using: return "redirect:/feeds"; To redirect url
     @GetMapping("/")
     public String home(Model model) {
-        return get_feeds(20, 0, model);
+        return getFeeds(20, 0, model);
     }
 
     /**
@@ -42,7 +42,7 @@ public class FeedController {
      * @return a view object with the name feed (check src/main/webapp/WEB-INF/views)
      */
     @GetMapping("/feeds")
-    public String get_feeds(@RequestParam(name = "size", required = false, defaultValue = "20") int size,
+    public String getFeeds(@RequestParam(name = "size", required = false, defaultValue = "20") int size,
                             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
                             Model model) {
         Application.logger.info("Executing request to fetch all feeds");
@@ -61,7 +61,7 @@ public class FeedController {
      */
     @PostMapping("/feeds")
     public @ResponseBody
-    String post_feed(@RequestParam(name = "url") String url,
+    String postFeed(@RequestParam(name = "url") String url,
                      @RequestParam(name = "feed_name") String feedName,
                      Model model) {
         Application.logger.info("Executing request to create a new feed.");
@@ -85,7 +85,7 @@ public class FeedController {
      * @return Redirect to all feeds or an error message
      */
     @PostMapping("/delete_feed")
-    public String delete_feed(@RequestParam(name = "feed_id") Long feedId,
+    public String deleteFeed(@RequestParam(name = "feed_id") Long feedId,
                               Model model) {
         Application.logger.info("Executing request to delete a feed.");
 
