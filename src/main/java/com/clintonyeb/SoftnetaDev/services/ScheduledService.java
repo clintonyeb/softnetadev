@@ -1,9 +1,8 @@
 package com.clintonyeb.SoftnetaDev.services;
 
+import com.clintonyeb.SoftnetaDev.Application;
 import com.clintonyeb.SoftnetaDev.helpers.Constants;
 import com.clintonyeb.SoftnetaDev.models.Feed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -17,8 +16,6 @@ import java.util.List;
 @Component
 public class ScheduledService {
 
-    private static final Logger log = LoggerFactory.getLogger(ScheduledService.class);
-
     @Autowired
     private IFeedService feedService;
     @Autowired
@@ -29,7 +26,7 @@ public class ScheduledService {
      */
     @Scheduled(fixedDelay = Constants.SCHEDULER_INTERVAL)
     public void fetchMessages() {
-        log.info("Fetching new messages");
+        Application.logger.info("=== Fetching new 'feed items' for feeds ===");
 
         List<Feed> feeds = feedService.getAllFeeds();
 
@@ -37,5 +34,7 @@ public class ScheduledService {
             List entries = messageService.getFeedMessages(fd);
             messageService.addMessages(fd, entries);
         }
+
+        Application.logger.info("=== Scheduler done fetching feeds. Taking a nap now. See ya. ===");
     }
 }

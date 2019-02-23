@@ -1,5 +1,6 @@
 package com.clintonyeb.SoftnetaDev.controllers;
 
+import com.clintonyeb.SoftnetaDev.Application;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class ErrorController {
     @GetMapping("/error")
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String error(Model model) {
+        Application.logger.info("Internal Error occurred.");
         model.addAttribute("message", "There was an error processing your request");
         return "error";
     }
@@ -26,6 +28,7 @@ public class ErrorController {
     @GetMapping("/*")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String notFound(Model model) {
+        Application.logger.info("No route matches specified route.");
         return "404";
     }
 
@@ -35,6 +38,6 @@ public class ErrorController {
     @GetMapping("/**")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String notFound_2(Model model) {
-        return "404";
+        return notFound(model);
     }
 }

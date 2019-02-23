@@ -1,5 +1,6 @@
 package com.clintonyeb.SoftnetaDev.controllers;
 
+import com.clintonyeb.SoftnetaDev.Application;
 import com.clintonyeb.SoftnetaDev.models.Feed;
 import com.clintonyeb.SoftnetaDev.models.Message;
 import com.clintonyeb.SoftnetaDev.services.IFeedService;
@@ -35,6 +36,8 @@ public class MessageController {
     public String get_feed_messages(@RequestParam(name = "size", required = false, defaultValue = "10") String size,
                                     @RequestParam(name = "feed_id") long feedId,
                                     Model model) {
+        Application.logger.info("Executing request to get list of items for a feed.");
+
         Feed feed = feedService.getFeed(feedId);
 
         List<Message> messages = messageService.getAllMessagesByFeedId(feedId);

@@ -1,5 +1,6 @@
 package com.clintonyeb.SoftnetaDev.controllers;
 
+import com.clintonyeb.SoftnetaDev.Application;
 import com.clintonyeb.SoftnetaDev.models.Feed;
 import com.clintonyeb.SoftnetaDev.services.IFeedService;
 import com.clintonyeb.SoftnetaDev.services.IMessageService;
@@ -44,6 +45,7 @@ public class FeedController {
     public String get_feeds(@RequestParam(name = "size", required = false, defaultValue = "20") int size,
                             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
                             Model model) {
+        Application.logger.info("Executing request to fetch all feeds");
         model.addAttribute("items", feedService.getAllFeeds(size, page));
         return "feeds";
     }
@@ -61,6 +63,7 @@ public class FeedController {
     String post_feed(@RequestParam(name = "url") String url,
                      @RequestParam(name = "feed_name") String feedName,
                      Model model) {
+        Application.logger.info("Executing request to create a new feed.");
 
         Feed feed = feedService.addFeed(url, feedName);
 
@@ -69,6 +72,7 @@ public class FeedController {
             return gson.toJson(feed);
         }
 
+        Application.logger.info("Error creating a new feed.");
         return "Error saving feed";
     }
 
@@ -82,6 +86,8 @@ public class FeedController {
     @PostMapping("/delete_feed")
     public String delete_feed(@RequestParam(name = "feed_id") Long feedId,
                               Model model) {
+        Application.logger.info("Executing request to delete a feed.");
+
         boolean status = feedService.removeFeed(feedId);
 
         // if feed was successfully deleted, redirect to all feeds
@@ -90,6 +96,8 @@ public class FeedController {
         }
 
         model.addAttribute("message", "There was an error deleting feed.");
+        Application.logger.info("Error deleting a feed.");
+
         return "error";
     }
 }
