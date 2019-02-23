@@ -5,8 +5,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/***
+ * Handles errors in the application.
+ */
 public class ErrorController {
 
+    /***
+     * Handles generic errors
+     */
     @GetMapping("/error")
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String error(Model model) {
@@ -14,12 +20,18 @@ public class ErrorController {
         return "error";
     }
 
+    /***
+     * Handles requests that do not match any route.
+     */
     @GetMapping("/*")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String notFound(Model model) {
         return "404";
     }
 
+    /***
+     * Handles requests that do not match any route.
+     */
     @GetMapping("/**")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String notFound_2(Model model) {

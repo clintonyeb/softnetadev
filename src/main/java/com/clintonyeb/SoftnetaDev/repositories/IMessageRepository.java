@@ -10,9 +10,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Extends the Message Model
+ */
 @Repository
 public interface IMessageRepository extends PagingAndSortingRepository<Message, Long> {
+
     String countByFeedId = "SELECT COUNT(id) FROM Message m WHERE m.feed.id = ?1";
+
+    // Adds a sorting capability to the message model
     Sort MESSAGE_SORT = new Sort(Sort.Direction.DESC, Constants.MESSAGE_SORT_PROPERTY);
 
     @Query(countByFeedId)

@@ -8,6 +8,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * A Feed Model represents an XML RSS Feed.
+ */
 @Entity
 public class Feed {
     @Id

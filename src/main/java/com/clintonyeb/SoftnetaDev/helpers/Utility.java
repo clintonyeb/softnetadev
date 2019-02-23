@@ -14,7 +14,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * Set of Global Utility functions
+ */
 public class Utility {
+
+    /**
+     * Useful to make external HTTP requests to other web servers.
+     * @param url The url to which request must be made
+     * @return a BufferedReader object or null
+     */
     public static Reader makeHTTPRequest(String url) {
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
@@ -41,6 +50,12 @@ public class Utility {
 
     }
 
+    /**
+     * Utility function to add days to a date object
+     * @param date the date from which to add days
+     * @param days The days to add to the date object
+     * @return A new time object
+     */
     public static Date addDays(Date date, int days) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);

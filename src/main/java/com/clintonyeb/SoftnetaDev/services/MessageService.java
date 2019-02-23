@@ -21,6 +21,9 @@ import java.io.Reader;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Implements functionalities for the MessageService object.
+ */
 @Service
 public class MessageService implements IMessageService {
 

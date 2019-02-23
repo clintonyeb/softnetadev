@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Defines an interface for the MessageService object
+ */
 @Service
 public interface IMessageService {
     List<SyndEntry> getFeedMessages(Feed feed);

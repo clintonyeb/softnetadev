@@ -7,6 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * A Message Model represents an XML RSS messages in a feed.
+ */
 @Entity
 public class Message {
     @Id

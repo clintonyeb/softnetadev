@@ -22,6 +22,9 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Implements functionalities for the FeedService object.
+ */
 @Service
 public class FeedService implements IFeedService {
     private ExecutorService executorService;

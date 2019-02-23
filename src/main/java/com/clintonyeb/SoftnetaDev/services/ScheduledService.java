@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Background Service responsible for updating feeds.
+ * The Service is called automatically at intervals to perform its operations.
+ */
 @Component
 public class ScheduledService {
 
@@ -20,6 +24,9 @@ public class ScheduledService {
     @Autowired
     private MessageService messageService;
 
+    /**
+     * This method is scheduled for execution at fixedDea=lay intervals
+     */
     @Scheduled(fixedDelay = Constants.SCHEDULER_INTERVAL)
     public void fetchMessages() {
         log.info("Fetching new messages");

@@ -9,6 +9,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Creates a tag that formats dates to 'from now' format
+ */
 public class PrettyDateTag extends SimpleTagSupport {
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     private static PrettyTime prettyTime = new PrettyTime();
