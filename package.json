@@ -9,9 +9,9 @@
     "css-watch": "npm run css-build -- --watch",
     "start": "npm run css-watch"
   },
-  "author": "",
+  "author": "Clinton Yeboah",
   "license": "ISC",
-  "devdependencies": {
+  "devDependencies": {
     "node-sass": "^4.9.2"
   }
 }
