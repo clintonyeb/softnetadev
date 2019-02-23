@@ -64,6 +64,7 @@ public class FeedService implements IFeedService {
             feed = op.get();
             return feed;
         }
+
         return null;
     }
 
@@ -107,6 +108,11 @@ public class FeedService implements IFeedService {
         return null;
     }
 
+    /**
+     * Populates Feed Information from an HTTP call
+     * @param feed the feed to be populated
+     * @return
+     */
     private List setFeedInfo(Feed feed) {
 
         Reader rd = Utility.makeHTTPRequest(feed.getUrl());

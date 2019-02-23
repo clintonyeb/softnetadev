@@ -25,9 +25,8 @@ public class FeedController {
     @Autowired
     private IFeedService feedService;
 
-    // Make '/feeds' the default route by simply calling the get_feeds method.
+    // Make '/feeds' the default route by simply calling the getFeeds method.
     // In earlier implementation, we were redirecting the route. This has been removed for simplicity sake.
-    // by using: return "redirect:/feeds"; To redirect url
     @GetMapping("/")
     public String home(Model model) {
         return getFeeds(20, 0, model);
@@ -47,6 +46,7 @@ public class FeedController {
                             Model model) {
         Application.logger.info("Executing request to fetch all feeds");
         model.addAttribute("items", feedService.getAllFeeds(size, page));
+
         return "feeds";
     }
 
@@ -62,8 +62,8 @@ public class FeedController {
     @PostMapping("/feeds")
     public @ResponseBody
     String postFeed(@RequestParam(name = "url") String url,
-                     @RequestParam(name = "feed_name") String feedName,
-                     Model model) {
+                    @RequestParam(name = "feed_name") String feedName,
+                    Model model) {
         Application.logger.info("Executing request to create a new feed.");
 
         Feed feed = feedService.addFeed(url, feedName);
@@ -74,6 +74,7 @@ public class FeedController {
         }
 
         Application.logger.info("Error creating a new feed.");
+
         return "Error saving feed";
     }
 
@@ -96,8 +97,8 @@ public class FeedController {
             return "redirect:/feeds";
         }
 
-        model.addAttribute("message", "There was an error deleting feed.");
         Application.logger.info("Error deleting a feed.");
+        model.addAttribute("message", "There was an error deleting feed.");
 
         return "error";
     }
