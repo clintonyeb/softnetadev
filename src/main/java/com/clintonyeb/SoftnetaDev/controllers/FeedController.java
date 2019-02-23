@@ -53,6 +53,7 @@ public class FeedController {
     /**
      * Creates a new feed
      * Invokes the FeedService object to add a new feed
+     * NB: This method returns a raw json-string, as it is expected to be called from an ajax request
      * @param url The url to the XML RSS Feed
      * @param feedName A display name for the feed
      * @param model
