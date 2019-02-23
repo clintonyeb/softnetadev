@@ -58,29 +58,24 @@ public class FeedService implements IFeedService {
     @Override
     public Feed getFeed(long feedId) {
         Optional<Feed> op = IFeedRepository.findById(feedId);
-        Feed feed;
 
-        if (op.isPresent()) {
-            feed = op.get();
-            return feed;
-        }
+        return op.orElse(null);
 
-        return null;
     }
 
     @Override
-    public Feed addFeed(String url, String feedName) {
+    public Feed addFeed(String feedURL, String feedName) {
         Feed f = new Feed();
 
         f.setFeedName(feedName);
-        f.setUrl(url);
-        List entries = setFeedInfo(f);
+        f.setUrl(feedURL);
 
         try {
             Feed feed = IFeedRepository.save(f);
 
             // start a new thread to handle adding entries
             // so user is not blocked for too long
+            List entries = setFeedInfo(f);
             executorService.execute(() -> IMessageService.addMessages(feed, entries));
 
             return feed;
