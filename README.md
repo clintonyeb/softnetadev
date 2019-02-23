@@ -2,6 +2,7 @@
 
 Softneta is a simple demo _XML RSS Feed_.
 
+Please see **Architecture Section** for important information about the project.
 
 ### Features
 
