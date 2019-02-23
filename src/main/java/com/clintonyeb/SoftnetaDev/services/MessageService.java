@@ -1,5 +1,6 @@
 package com.clintonyeb.SoftnetaDev.services;
 
+import com.clintonyeb.SoftnetaDev.Application;
 import com.clintonyeb.SoftnetaDev.helpers.Utility;
 import com.clintonyeb.SoftnetaDev.models.Feed;
 import com.clintonyeb.SoftnetaDev.models.Message;
@@ -27,8 +28,6 @@ import java.util.List;
 @Service
 public class MessageService implements IMessageService {
 
-    private static final Logger log = LoggerFactory.getLogger(MessageService.class);
-
     @Autowired
     private IMessageRepository messageRepository;
     @Autowired
@@ -36,7 +35,7 @@ public class MessageService implements IMessageService {
 
     @Override
     public List<SyndEntry> getFeedMessages(Feed feed) {
-        log.info("Fetching messages for " + feed.getId());
+        Application.logger.info("Fetching messages for " + feed.getId());
 
         Reader rd = Utility.makeHTTPRequest(feed.getUrl());
 
@@ -83,7 +82,7 @@ public class MessageService implements IMessageService {
 
             try {
                 messageRepository.save(message);
-                log.info("Saved new message for feed: " + feed.getId());
+                Application.logger.info("Saved new message for feed: " + feed.getId());
 
                 // feed has an updated message
                 // so updated its last updated date
@@ -91,7 +90,7 @@ public class MessageService implements IMessageService {
             } catch (Exception e) {
                 // duplicate entries will throw an exception
                 // ignore them
-                log.info("Ignoring duplicate messages");
+                Application.logger.info("Ignoring duplicate messages");
             }
         }
     }
