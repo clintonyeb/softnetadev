@@ -42,6 +42,11 @@ This project uses the MVCS architecture.
 
 The business logic of the application is contained in the **src** folder of the project folder. Inside the src folder (src/main/java/com/clintonyeb/SoftnetaDev/), there 6 folder and the entry point into the application (src/main/java/com/clintonyeb/SoftnetaDev/Application.java).
 
+### NodeJS
+
+There is also include a NodeJS packaging system in the project. This is only needed during development and is required to building the CSS file for the project view files.
+Once the CSS file is built, it is only required to be rebuilt after changes are made to it.
+
 ### Important
 
 The Project contains a scheduled service in (src/main/java/com/clintonyeb/SoftnetaDev/services/ScheduledService.java). This service handles waking up an repeated intervals to update feeds in the system.
