@@ -97,7 +97,7 @@ cd softnetadev
 java -jar target/softnetadev.jar
 ```
 
-> You can then access petclinic here: [localhost:8080](http://localhost:8080) to view application
+> You can then access softneta here: [localhost:8080](http://localhost:8080) to view application
 
 
 1. Running as a Packaged Application
