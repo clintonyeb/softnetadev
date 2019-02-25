@@ -12,8 +12,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class Application {
-    public static final Logger logger = LoggerFactory.getLogger(Application.class);
+    public static final Logger logger = LoggerFactory.getLogger("Softneta:::");
+
     public static void main(String[] args) {
+        logger.info("=== Starting Softneta Application ===");
         SpringApplication.run(Application.class, args);
+        logger.info("=== Started Softneta Application ===");
     }
 }
