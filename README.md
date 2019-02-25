@@ -90,6 +90,8 @@ CREATE DATABASE feeds;
 
 #### Running the Application
 
+Download and Build project:
+
 ```
 git clone https://github.com/clintonyeb/softnetadev.git
 cd softnetadev
